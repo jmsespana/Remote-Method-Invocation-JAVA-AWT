@@ -21,6 +21,7 @@ public class StudentEnrollmentClient extends Frame implements ActionListener {
         idField = new TextField(20);
         emailField = new TextField(20);
 
+        //STEP 3; Add diri og courses
         courseChoice = new Choice();
         courseChoice.add("Computer Science");
         courseChoice.add("Information Technology");
@@ -106,7 +107,7 @@ public class StudentEnrollmentClient extends Frame implements ActionListener {
                 }
             }
         } else if (e.getSource() == deleteButton) {
-            // Show input dialog to confirm deletion by entering the Student ID
+            // STEP 1; method sa delete student by ID
             String studentIdToDelete = JOptionPane.showInputDialog(this, 
                 "Enter the Student ID to delete:", "Delete Student", JOptionPane.QUESTION_MESSAGE);
     
@@ -129,7 +130,7 @@ public class StudentEnrollmentClient extends Frame implements ActionListener {
 
     private void displayEnrolledStudents() {
         try {
-            outputArea.setText(""); // Clear the output area before displaying students
+            outputArea.setText(""); //STEP 2: Clear the output area before displaying students
             List<String> students = enrollmentService.getEnrolledStudents();
             outputArea.append("Enrolled Students:\n");
             for (String student : students) {

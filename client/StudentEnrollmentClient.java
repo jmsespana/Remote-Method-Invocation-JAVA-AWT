@@ -90,19 +90,26 @@ public class StudentEnrollmentClient extends Frame implements ActionListener {
             String studentId = idField.getText();
             String email = emailField.getText();
             String course = courseChoice.getSelectedItem();
-
-            try {
-                String result = enrollmentService.enrollStudent(name, studentId, email, course);
-                outputArea.append(result + "\n");
-                displayEnrolledStudents();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+    
+            // Validate fields before enrolling
+            if (name.trim().isEmpty() || studentId.trim().isEmpty() || email.trim().isEmpty()) {
+                // Prompt the user to input all fields
+                JOptionPane.showMessageDialog(this, "Please input all fields.", "Input Error", JOptionPane.WARNING_MESSAGE);
+            } else {
+                try {
+                    String result = enrollmentService.enrollStudent(name, studentId, email, course);
+                    outputArea.append(result + "\n");
+                    displayEnrolledStudents();
+                    clearFields(); // Clear fields after successful enrollment
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         } else if (e.getSource() == deleteButton) {
             // Show input dialog to confirm deletion by entering the Student ID
             String studentIdToDelete = JOptionPane.showInputDialog(this, 
                 "Enter the Student ID to delete:", "Delete Student", JOptionPane.QUESTION_MESSAGE);
-
+    
             if (studentIdToDelete != null && !studentIdToDelete.trim().isEmpty()) {
                 try {
                     String result = enrollmentService.deleteStudentById(studentIdToDelete);
@@ -118,6 +125,7 @@ public class StudentEnrollmentClient extends Frame implements ActionListener {
             clearFields();
         }
     }
+    
 
     private void displayEnrolledStudents() {
         try {
